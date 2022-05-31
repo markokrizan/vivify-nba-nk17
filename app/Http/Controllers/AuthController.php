@@ -14,7 +14,7 @@ class AuthController extends Controller
 {
     public function __construct()
     {
-        // $this->middleware('auth')->only('logout');
+        $this->middleware('auth')->only('logout');
     }
 
     public function showRegisterForm() {

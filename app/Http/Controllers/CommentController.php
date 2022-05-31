@@ -14,7 +14,7 @@ class CommentController extends Controller
         // This 
         // $comment = new Comment($commentRequest->validated());
 
-        // $comment->team()->associate($team);
+        // $comment->team()->associate($comment);
         // $comment->user()->associate(Auth::user());
 
         // $comment->save();
