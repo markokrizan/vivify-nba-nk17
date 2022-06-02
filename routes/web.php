@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\NewsController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -22,6 +23,7 @@ Route::get('/login', [AuthController::class, 'showLoginForm']);
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/logout', [AuthController::class, 'logout']);
 
+// https://laravel.com/docs/9.x/verification#main-content
 // 1. Route that serves the view that says the user's email is not verified
 Route::get('/email/verify', function () {
     return view('auth.verify-email');
@@ -48,3 +50,7 @@ Route::get('/teams', 'App\Http\Controllers\TeamController@index');
 Route::get('/teams/{team}', 'App\Http\Controllers\TeamController@show');
 Route::post('/teams/{team}/comments', 'App\Http\Controllers\CommentController@store');
 Route::get('/players/{player}', 'App\Http\Controllers\PlayerController@show');
+Route::get('/news', [NewsController::class, 'index']);
+Route::get('/news/create', [NewsController::class, 'create']);
+Route::post('/news/create', [NewsController::class, 'store']);
+Route::get('/news/{news}', [NewsController::class, 'show']); // /news/create mora biti prva jer ce /news/{create} prva da se mecuje ako je iznad nje
