@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CommentRequest;
+use App\Mail\CommentReceived;
 use App\Models\Comment;
 use App\Models\Team;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class CommentController extends Controller
 {
@@ -14,7 +16,7 @@ class CommentController extends Controller
         // This 
         // $comment = new Comment($commentRequest->validated());
 
-        // $comment->team()->associate($team);
+        // $comment->team()->associate($comment);
         // $comment->user()->associate(Auth::user());
 
         // $comment->save();
@@ -27,7 +29,9 @@ class CommentController extends Controller
             ]
         );
 
-        $team->comments()->create($data);
+        $comment = $team->comments()->create($data);
+
+        Mail::to($team->email)->send(new CommentReceived($comment));
 
         return back();
     }

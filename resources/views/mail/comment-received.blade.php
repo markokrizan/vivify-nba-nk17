@@ -1,0 +1,1 @@
+<p>Comment created: {{ $comment->content }}</p>
