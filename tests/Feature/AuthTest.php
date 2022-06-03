@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Event;
 use Tests\TestCase;
@@ -33,6 +34,20 @@ class AuthTest extends TestCase
         $response->assertStatus(302);
     }
 
+    public function testSuccesfullLogin()
+    {
+        $user = User::factory()->create();
+
+        $response = $this
+            ->post('/login', [
+                'email' => $user->email,
+                'password' => 'password'
+            ]);
+
+        $this->assertAuthenticated();
+        $response->assertStatus(302);
+    }
+
     public function testRegisterForm()
     {
         $response = $this->get('/register');
@@ -56,11 +71,6 @@ class AuthTest extends TestCase
         $response->assertStatus(302);
     }
 
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
     public function testSuccesfullRegister()
     {
         Event::fake([Registered::class]);
